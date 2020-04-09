@@ -1,0 +1,2 @@
+class UserCocktailsController < ApplicationController
+end
