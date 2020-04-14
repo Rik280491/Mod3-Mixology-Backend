@@ -1,6 +1,8 @@
-Recipe.destroy_all
+Combination.destroy_all
 Cocktail.destroy_all
+Measure.destroy_all
 Ingredient.destroy_all
+
 
 require 'rest-client'
 
@@ -24,21 +26,39 @@ Cocktail.all.each do |cocktail|
     
     cocktail.method = cocktail_drink_array[0]["strInstructions"]
 
+
+
     for i in 1..15
-        if (cocktail_drink_array[0]["strIngredient#{i}"] == nil) 
+        ing = cocktail_drink_array[0]["strIngredient#{i}"]
+        mea = cocktail_drink_array[0]["strMeasure#{i}"]
+
+        if (ing == nil)
         else
-            ingredient = Ingredient.find_by(name: cocktail_drink_array[0]["strIngredient#{i}"])
-            recipe = Recipe.find_by(cocktail: cocktail, ingredient: ingredient)
-            if (recipe)
+            ingredient = Ingredient.find_by(name: ing)
+            measure = Measure.find_by(amount: mea)
+            comb = Combination.find_by(ingredient: ingredient, measure: measure, cocktail: cocktail)
+
+            if (comb)
             else
                 if (ingredient)
-                    Recipe.create(cocktail: cocktail, ingredient: ingredient)
+                    if (measure)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    else
+                        measure = Measure.create(amount: mea)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    end
                 else
-                    ing = Ingredient.create(name: cocktail_drink_array[0]["strIngredient#{i}"])
-                    Recipe.create(cocktail: cocktail, ingredient: ing)
+                    ingredient = Ingredient.create(name: ing)
+                    if (measure)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    else
+                        measure = Measure.create(amount: mea)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    end
                 end
             end
         end
+
     end
     
     cocktail.save
