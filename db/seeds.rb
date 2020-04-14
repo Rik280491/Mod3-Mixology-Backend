@@ -1,10 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+Combination.destroy_all
+Cocktail.destroy_all
+Measure.destroy_all
+Ingredient.destroy_all
 
 
 
@@ -29,23 +27,44 @@ Cocktail.all.each do |cocktail|
     cocktail_drink_array = JSON.parse(cocktail_drink)["drinks"]
     
     cocktail.method = cocktail_drink_array[0]["strInstructions"]
-    
-    # ingredients_array = []
-    # for i in 1..15
-    #     ingredients_array << cocktail_drink_array[0]["strIngredient#{i}"]
 
-        
-    #     puts(ingredients_array)
-    # end 
-    
-    
+
+
+    for i in 1..15
+        ing = cocktail_drink_array[0]["strIngredient#{i}"]
+        mea = cocktail_drink_array[0]["strMeasure#{i}"]
+
+        if (ing == nil)
+        else
+            ingredient = Ingredient.find_by(name: ing)
+            measure = Measure.find_by(amount: mea)
+            comb = Combination.find_by(ingredient: ingredient, measure: measure, cocktail: cocktail)
+
+            if (comb)
+            else
+                if (ingredient)
+                    if (measure)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    else
+                        measure = Measure.create(amount: mea)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    end
+                else
+                    ingredient = Ingredient.create(name: ing)
+                    if (measure)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    else
+                        measure = Measure.create(amount: mea)
+                        Combination.create(ingredient: ingredient, measure: measure, cocktail: cocktail)
+                    end
+                end
+            end
+        end
+
+    end
     
     cocktail.save
-    
-    puts(cocktail.method)
 
-    #after id: 100, method = null
-    #measure and ingredients 
 end
 
 

@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_150149) do
+
+ActiveRecord::Schema.define(version: 2020_04_14_122545) do
+
 
   create_table "cocktails", force: :cascade do |t|
     t.string "name"
@@ -19,6 +21,31 @@ ActiveRecord::Schema.define(version: 2020_04_09_150149) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "drinkId"
+
+  end
+
+  create_table "combinations", force: :cascade do |t|
+    t.integer "measure_id", null: false
+    t.integer "ingredient_id", null: false
+    t.integer "cocktail_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cocktail_id"], name: "index_combinations_on_cocktail_id"
+    t.index ["ingredient_id"], name: "index_combinations_on_ingredient_id"
+    t.index ["measure_id"], name: "index_combinations_on_measure_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "measures", force: :cascade do |t|
+    t.string "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+
   end
 
   create_table "user_cocktails", force: :cascade do |t|
@@ -36,6 +63,9 @@ ActiveRecord::Schema.define(version: 2020_04_09_150149) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "combinations", "cocktails"
+  add_foreign_key "combinations", "ingredients"
+  add_foreign_key "combinations", "measures"
   add_foreign_key "user_cocktails", "cocktails"
   add_foreign_key "user_cocktails", "users"
 end

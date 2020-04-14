@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :combinations
+  resources :measures
+  resources :ingredient_cocktails
+  resources :ingredients
   resources :user_cocktails
   resources :cocktails
   resources :users
