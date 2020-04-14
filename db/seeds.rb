@@ -1,7 +1,9 @@
+
 Combination.destroy_all
 Cocktail.destroy_all
 Measure.destroy_all
 Ingredient.destroy_all
+
 
 
 require 'rest-client'

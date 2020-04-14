@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_04_14_122545) do
+
 
   create_table "cocktails", force: :cascade do |t|
     t.string "name"
@@ -19,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_122545) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "drinkId"
+
   end
 
   create_table "combinations", force: :cascade do |t|
@@ -42,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_122545) do
     t.string "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+
   end
 
   create_table "user_cocktails", force: :cascade do |t|
