@@ -9,7 +9,7 @@ class CocktailsController < ApplicationController
     def show 
         cocktail = Cocktail.find(params[:id])
 
-        render json: cocktail, includes: [:users, :combinations]
+        render json: cocktail, include: [:users, :ingredients, :measures]
 
     end 
 

@@ -2,17 +2,18 @@ class UserCocktailsController < ApplicationController
 
     def index
         usercocktails = UserCocktail.all 
-        render json: usercocktails
+        render json: usercocktails, include: [:user, :cocktail]
     end 
 
 
     def show 
         usercocktail = UserCocktail.find(params[:id])
-        render json: usercocktail
+        render json: usercocktail, include: [:user, :cocktail]
     end
 
     def create
         usercocktail = UserCocktail.create(user_cocktail_params)
+        render json: usercocktail, include: [:user, :cocktail]
     end 
 
 
