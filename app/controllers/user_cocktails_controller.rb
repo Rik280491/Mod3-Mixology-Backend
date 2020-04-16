@@ -16,8 +16,18 @@ class UserCocktailsController < ApplicationController
         render json: usercocktail, include: [:user, :cocktail]
     end 
 
+    def update
+        usercocktail = UserCocktail.find(params[:id])
+        render json: usercocktail, include: [:user, :cocktail]
+    end   
 
+    def destroy
+        usercocktail = UserCocktail.find(params[:id])
+        usercocktail.destroy
+        render json: usercocktail, include: [:user, :cocktail]
+    end 
 
+   
 
     private 
 
