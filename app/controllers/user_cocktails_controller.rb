@@ -18,6 +18,7 @@ class UserCocktailsController < ApplicationController
 
     def update
         usercocktail = UserCocktail.find(params[:id])
+        usercocktail.update(notes: params[:notes])
         render json: usercocktail, include: [:user, :cocktail]
     end   
 
@@ -28,11 +29,14 @@ class UserCocktailsController < ApplicationController
     end 
 
    
-
+#     @article = Article.find(params[:id])
+#     @article.update(title: params[:article][:title], description: params[:article][:description])
+#     redirect_to article_path(@article)
+#   end
     private 
 
     def user_cocktail_params 
-        params.require(:user_cocktail).permit(:user_id, :cocktail_id)
+        params.require(:user_cocktail).permit(:user_id, :cocktail_id, :notes)
     end 
 
     
